@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /public/
+Sitemap: https://raihan.my.id/sitemap.xml
