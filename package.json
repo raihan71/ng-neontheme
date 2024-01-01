@@ -3,11 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --aot -o",
+    "build-dev": "ng build",
+    "build:prod": "ng build --configuration production --aot",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ngsite-hacker": "node dist/ngsite-hacker/server/server.mjs"
+    "dev:ssr": "ng run test:serve-ssr",
+    "serve:ssr:ngsite-hacker": "node dist/ngsite-hacker/server/server.mjs",
+    "build:ssr": "ng build && ng run test:server",
+    "prerender": "ng run test:prerender",
+    "vercel-build": "npm run build:ssr"
   },
   "private": true,
   "dependencies": {
