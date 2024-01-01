@@ -1,14 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-
+import { NavbarComponent } from './layouts/navbar/navbar.component';
+import { FooterComponent } from './layouts/footer/footer.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styles: [`
+    .back-to-top {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+    }
+  `]
 })
 export class AppComponent {
-  title = 'ngsite-hacker';
+  title:string = 'ngsite-hacker';
+  activateGoTop:boolean = false;
+
+  @HostListener('window:scroll',[])
+  onWindowScroll() {
+    if ( window.scrollY > 100 ) {
+      this.activateGoTop = true;
+    } else {
+      this.activateGoTop = false;
+    }
+  }
+  scrollToTop() {
+      return window.scrollTo(0, 0);
+  }
 }

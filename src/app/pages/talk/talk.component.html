@@ -1,0 +1,38 @@
+<main role="main">
+  <div class="ht-main">
+    <div class="ht-tm-wrapper">
+      <div class="container ht-tm-container">
+        <div class="row">
+          <div class="col-xl-12">
+            <h2 class="display-4 ht-tm-component-title">Latest Tal<span class="vim-caret">k</span></h2>
+          </div>
+        </div>
+        <div id="ht-tm-maincolumn" class="ht-tm-maincolumn">
+          <div class="row">
+            <div class="col-md-6">
+              @if (!show) {
+                <app-skeleton />
+              } @else {
+                  <ul class="timeline">
+                    @for (talk of talks; track $index) {
+                      <li>
+                        <div class="card bg-transparent border">
+                          <div class="card-body">
+                            <a [routerLink]="['/talk', talk?.sys?.id]">{{talk?.fields?.title}}</a>
+                            <a href="javascript:;" class="float-right">{{talk?.fields?.dateEvent | date: "mediumDate"}}</a>
+                            <p>{{talk?.fields?.shortDesc | ellipsis}}</p>
+                          </div>
+                        </div>
+                      </li>
+                    } @empty {
+                      <app-skeleton />
+                    }
+                  </ul>
+                }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

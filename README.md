@@ -1,27 +1,47 @@
-# NgsiteHacker
+<h1 align="center">🅰️ Welcome to Ng-NeonTheme 🅰️</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-(1.0.0)-blue.svg?cacheSeconds=2592000" />
+  <a href="https://twitter.com/rayhan\_nj" target="_blank">
+    <img alt="Twitter: rayhan\_nj" src="https://img.shields.io/twitter/follow/rayhan\_nj.svg?style=social" />
+  </a>
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.8.
+> Ng-NeonTheme is a template personal site that is ready to launch for you, built using the latest Angular and Headless-cms Contentful its crafted with full of hearts and the best practices of the usage, inspired from Neon Glow template by hackerthemes.
 
-## Development server
+### 🏠 [Homepage](https://hackerthemes.com/bootstrap-themes/demo/neon-glow/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### ✨ [Demo](raihan.my.id)
 
-## Code scaffolding
+## Install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```sh
+npm install
+```
 
-## Build
+## Usage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```sh
+ng serve
+```
 
-## Running unit tests
+## Run tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```sh
+ng test
+```
 
-## Running end-to-end tests
+## Author
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+👤 **Raihan Nismara**
 
-## Further help
+* Website: raihan.my.id
+* Twitter: [@rayhan\_nj](https://twitter.com/rayhan\_nj)
+* Github: [@raihan71](https://github.com/raihan71)
+* LinkedIn: [@raihannismara](https://linkedin.com/in/raihannismara)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

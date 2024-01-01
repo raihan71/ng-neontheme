@@ -1,0 +1,119 @@
+@if (page === 'Home') {
+  <div class="first-section-wrapper">
+    <div class="wrapper">
+        <ngx-skeleton-loader
+          animation="pulse"
+          [theme]="{
+            width: '90%',
+            'border-radius': '0',
+            'margin-bottom': '10px',
+            'background-color': '#323232',
+            border: '1px solid #323232',
+            'animation-duration': '2s'
+          }"
+        ></ngx-skeleton-loader>
+        <div>
+          <ngx-skeleton-loader
+            animation="pulse"
+            [theme]="{
+              width: '80%',
+              'border-radius': '0',
+              'background-color': '#323232',
+              border: '1px solid #323232',
+              'animation-duration': '2s'
+            }"
+          >
+          </ngx-skeleton-loader>
+        </div>
+    </div>
+  </div>
+  <div class="second-section-wrapper">
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="pulse"
+        [theme]="{
+          width: '80%',
+          'border-radius': '0',
+          'margin-bottom': '10px',
+          'background-color': '#323232',
+          border: '1px solid #323232',
+          'animation-duration': '2s'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="pulse"
+        [theme]="{
+          width: '90%',
+          'border-radius': '0',
+          'margin-bottom': '10px',
+          'background-color': '#323232',
+          border: '1px solid #323232',
+          'animation-duration': '2s'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="pulse"
+        [theme]="{
+          width: '60%',
+          'border-radius': '0',
+          'margin-bottom': '10px',
+          'background-color': '#323232',
+          border: '1px solid #323232',
+          'animation-duration': '2s'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+  </div>
+} @else if (page === 'Work' || page === 'Project' || page === 'Blog') {
+  <div class="first-section-wrapper">
+    <div class="gravatar">
+      <ngx-skeleton-loader
+        appearance="circle"
+        animation="pulse"
+        [theme]="{ width: '80px', height: '80px', 'background-color': '#323232',
+        border: '1px solid #323232',
+        'animation-duration': '2s' }"
+      >
+      </ngx-skeleton-loader>
+    </div>
+    <div class="gravatar-title">
+      <div>
+        <ngx-skeleton-loader
+          animation="pulse"
+          [theme]="{
+            width: '270px',
+            'border-radius': '0',
+            'margin-bottom': '10px',
+            'background-color': '#323232',
+            border: '1px solid #323232',
+            'animation-duration': '2s'
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader
+          animation="pulse"
+          [theme]="{ width: '370px', 'border-radius': '0', 'background-color': '#323232',
+          border: '1px solid #323232',
+          'animation-duration': '2s' }"
+        >
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+} @else {
+  <ngx-skeleton-loader
+    animation="pulse"
+    [theme]="{
+    width: width,
+    'border-radius': '0',
+    'margin-bottom': '10px',
+    'background-color': '#323232',
+    border: '1px solid #323232',
+    'animation-duration': '2s'
+  }" [count]="count"></ngx-skeleton-loader>
+}

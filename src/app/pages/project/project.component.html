@@ -1,0 +1,64 @@
+<main>
+  <div class="ht-main">
+    <div class="ht-tm-wrapper">
+      <div class="container ht-tm-container">
+        <div class="row">
+          <div class="col-xl-12">
+            <h2 class="display-4 ht-tm-component-title">Crafted Projec<span class="vim-caret">t</span></h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-12">
+            <div id="ht-tm-maincolumn" class="ht-tm-maincolumn">
+              <div class="ht-tm-componentsblock">
+                <div class="ht-tm-cat ht-tm-btn-replaceable">
+                  <div class="row">
+                    @if (!show) {
+                      @for (item of skeletons; track $index) {
+                        <div class="col-md-6">
+                          <app-skeleton page="Project" />
+                        </div>
+                      }
+                    } @else {
+                        @for (project of projects; track $index) {
+                        <div class="col-lg-4">
+                          <div class="row">
+                            <div class="ht-tm-codeblock">
+                              <div class="ht-tm-element card card-project bg-transparent border text-white">
+                                  <div class="col-12 p-5 d-block bg-dark rounded-top">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 mx-auto d-block">
+                                        <img
+                                          class="rounded-circle shadow-4-strong img-fluid mx-auto d-block"
+                                          [ngSrc]="project?.logoAsset"
+                                          [alt]="'image screenshot project '+project?.fields?.title"
+                                          width="187" height="187" priority
+                                        />
+                                    </div>
+                                  </div>
+                                <div class="card-body">
+                                  <h4 class="card-title">{{project?.fields?.title}}</h4>
+                                  <p class="card-text">{{project?.fields?.shortDesc}}</p>
+                                  <a [href]="project?.fields?.url" target="_blank" class="btn btn-primary">See demo</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      } @empty {
+                        @for (item of skeletons; track $index) {
+                          <div class="col-md-6">
+                            <app-skeleton page="Project" />
+                          </div>
+                        }
+                      }
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
