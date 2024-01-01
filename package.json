@@ -12,7 +12,8 @@
     "serve:ssr:ngsite-hacker": "node dist/ngsite-hacker/server/server.mjs",
     "build:ssr": "ng build && ng run test:server",
     "prerender": "ng run test:prerender",
-    "vercel-build": "npm run build:ssr"
+    "vercel-build": "npm run build:prod",
+    "serve:ssr:vercel": "node dist/ngsite-hacker/server/server.mjs"
   },
   "private": true,
   "dependencies": {
