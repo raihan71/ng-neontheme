@@ -1,3 +1,3 @@
-const server = require('../dist/ngsite-hacker/server/server.mjs');
+const server = import('../dist/ngsite-hacker/server/server.mjs');
 
 module.exports = server.app();
