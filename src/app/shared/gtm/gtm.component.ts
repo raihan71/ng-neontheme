@@ -7,7 +7,7 @@ import { Component, ElementRef, Inject, PLATFORM_ID, Renderer2 } from '@angular/
   template: '',
 })
 export class GoogleAnalyticsGTagComponent {
-  trackingCode = import.meta.env['NG_APP_GTM'];
+  trackingCode = import.meta.env['NG_APP_GTM'] || '';
 
   constructor(
     @Inject(PLATFORM_ID) private readonly platformId: Object,
