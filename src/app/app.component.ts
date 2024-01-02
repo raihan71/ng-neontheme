@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { Meta } from '@angular/platform-browser';
 import { inject } from '@vercel/analytics';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
@@ -27,11 +26,10 @@ export class AppComponent {
   title:string = 'ngsite-hacker';
   activateGoTop:boolean = false;
 
-  constructor(private meta: Meta){
+  constructor(){
     inject({
       mode: environment.production ? 'production' : 'development',
     });
-    this.meta.addTag({ name: 'google-site-verification', content: `${import.meta.env['NG_APP_GSEARCH'] || ''}` });
   }
 
   @HostListener('window:scroll',[])
