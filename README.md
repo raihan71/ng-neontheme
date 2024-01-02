@@ -16,10 +16,19 @@ git clone ng-neontheme
 cd ng-neontheme
 cp .env.example .env
 ```
+Setup your contentful with these entries model:
+![cf-Blank-master-2024-01-02_21-58-52](https://github.com/raihan71/ng-neontheme/assets/31585789/05b8dbed-2338-48e5-9baa-53a118077744)
+
 
 ### ✨ [Demo](raihan.my.id)
 
-![Demo Video](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDNjc2g5ZHZsYXhnNGM1ajVpa2hvNDBmdWNlZTJ1aWV3M3RzNzAycyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L1dYcqBPVru6PVTsFY/giphy.gif)
+![Demo Video Ng-NeonTheme](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDNjc2g5ZHZsYXhnNGM1ajVpa2hvNDBmdWNlZTJ1aWV3M3RzNzAycyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L1dYcqBPVru6PVTsFY/giphy.gif)
+
+And the performance quite awesome
+
+![Screenshot 2024-01-02 205838](https://github.com/raihan71/ng-neontheme/assets/31585789/a28525e9-a01c-4dfa-8971-e58c04e6e503)
+
+
 
 ## Install
 
@@ -38,6 +47,9 @@ ng serve
 ```sh
 ng test
 ```
+
+## Contribution
+If you have an idea or want to request some features feel free to propose an issue or read the details in contribution.md
 
 ## Author
 
