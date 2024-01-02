@@ -3,17 +3,18 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot -o",
+    "start": "ng serve -o",
     "build-dev": "ng build",
     "build:prod": "ng build --configuration production --aot",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run test:serve-ssr",
-    "serve:ssr:ngsite-hacker": "node dist/ngsite-hacker/server/server.mjs",
+    "serve:ssr:browser": "node dist/ngsite-hacker/browser/server.mjs",
     "build:ssr": "ng build && ng run test:server",
     "prerender": "ng run test:prerender",
-    "vercel-build": "npm run build:prod",
-    "serve:ssr:vercel": "node dist/ngsite-hacker/server/server.mjs"
+    "vercel-build": "npm run build:prod && npm run postbuild",
+    "serve:ssr:server": "node dist/ngsite-hacker/server/server.mjs",
+    "postbuild": "node postbuild.js"
   },
   "private": true,
   "dependencies": {
@@ -36,8 +37,8 @@
     "express": "^4.18.2",
     "ngx-skeleton-loader": "^8.1.0",
     "rxjs": "~7.8.0",
-    "sitemap": "^7.1.1",
     "tslib": "^2.3.0",
+    "xmlbuilder": "^15.1.1",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
@@ -49,12 +50,15 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "glob": "^10.3.10",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ngx-sitemap": "^1.0.0",
+    "purgecss": "^5.0.0",
     "typescript": "~5.2.2"
   }
 }

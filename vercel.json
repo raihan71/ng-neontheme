@@ -6,7 +6,7 @@
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "dist/ngsite-hacker/browser/**"
+      "includeFiles": "dist/ngsite-hacker/server/**"
     }
   }
 }
