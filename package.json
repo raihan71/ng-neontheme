@@ -1,7 +1,6 @@
 {
   "name": "ngsite-hacker",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
@@ -9,13 +8,10 @@
     "build:prod": "ng build --configuration production --aot",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev:ssr": "ng run test:serve-ssr",
     "serve:ssr:browser": "node dist/ngsite-hacker/browser/server.mjs",
-    "build:ssr": "ng build && ng run test:server",
-    "prerender": "ng run test:prerender",
-    "vercel-build": "npm run build:prod",
+    "vercel-build": "npm run build:prod && npm run postbuild",
     "serve:ssr:server": "node dist/ngsite-hacker/server/server.mjs",
-    "postbuild": "node postbuild.js"
+    "postbuild": "node postbuild.js dist"
   },
   "private": true,
   "dependencies": {

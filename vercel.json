@@ -1,7 +1,6 @@
 {
   "version": 2,
   "public": true,
-  "devCommand": "node dist/ngsite-hacker/server/server.mjs",
   "rewrites": [
     { "source": "/(.*)", "destination": "/api" }
   ],
