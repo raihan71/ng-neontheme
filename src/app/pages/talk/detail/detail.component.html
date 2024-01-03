@@ -9,8 +9,13 @@
             } @else {
               <div class="blog-post">
                 <h2 class="blog-post-title">{{talk?.title}}</h2>
-                <p class="blog-post-meta">{{talk?.dateEvent | date:'longDate'}}</p>
-                <div class="row col-12" [innerHTML]="talk?.longDesc | toHtml"></div>
+                <div class="d-flex justify-content-between">
+                  <p class="blog-post-meta">{{talk?.dateEvent | date:'longDate'}}</p>
+                  @if (talk?.eventName) {
+                    <p class="blog-post-meta pr-5 text-right"><a [href]="talk?.url" target="_blank">&#64; {{talk?.eventName}}</a></p>
+                  }
+                </div>
+                <div class="row col-12 text-wrap" style="flex-wrap: wrap!important;" [innerHTML]="talk?.longDesc | toHtml"></div>
               </div><!-- /.blog-post -->
             }
           </div><!-- /.blog-main -->

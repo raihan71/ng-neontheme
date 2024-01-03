@@ -15,7 +15,7 @@
               } @else {
                   <ul class="timeline">
                     @for (talk of talks; track $index) {
-                      <li>
+                      <li tabindex="0">
                         <div class="card bg-transparent border">
                           <div class="card-body">
                             <a [routerLink]="['/talk', talk?.sys?.id]">{{talk?.fields?.title}}</a>

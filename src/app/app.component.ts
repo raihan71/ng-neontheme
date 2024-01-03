@@ -1,11 +1,12 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { inject } from '@vercel/analytics';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { GoogleAnalyticsGTagComponent } from './shared/gtm/gtm.component';
 import { environment } from '../environments/environment';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -25,10 +26,15 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   title:string = 'ngsite-hacker';
   activateGoTop:boolean = false;
-
-  constructor(){
+  skipLinkPath:string = '';
+  constructor(private router:Router){
     inject({
       mode: environment.production ? 'production' : 'development',
+    });
+    router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+        if(!this.router.url.endsWith('#content')) {
+          this.skipLinkPath = `${this.router.url}#content`;
+        }
     });
   }
 
