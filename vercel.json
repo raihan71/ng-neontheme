@@ -1,12 +1,14 @@
 {
   "version": 2,
   "public": true,
+  "name": "ngsite-hacker",
+  "devCommand": "node dist/ngsite-hacker/server/main.server.mjs",
   "rewrites": [
     { "source": "/(.*)", "destination": "/api" }
   ],
   "functions": {
     "api/index.js": {
-      "includeFiles": "dist/ngsite-hacker/server/**"
+      "includeFiles": "dist/ngsite-hacker/browser/**"
     }
   }
 }

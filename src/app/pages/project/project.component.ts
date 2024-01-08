@@ -15,7 +15,7 @@ const CONFIG = environment.contentful_config;
     `.card-project:hover {
       border-color: #5e32e0!important;
       box-shadow: 0 0 50px 15px #714cdf;
-    },
+    }
     `
   ]
 })

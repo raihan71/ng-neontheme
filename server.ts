@@ -38,6 +38,7 @@ export function app(): express.Express {
     routes.forEach(route => {
       const url = root.ele('url');
       url.ele('loc', `https://raihan.my.id${route}`);
+      url.ele('priority', '1.0');
     });
 
     res.header('Content-Type', 'application/xml');
