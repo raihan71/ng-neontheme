@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ContentfulService } from '../../services/contentful.service';
@@ -12,7 +12,7 @@ const CONFIG = environment.contentful_config;
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgbPopover, PipesModule, SkeletonComponent, NgOptimizedImage],
+  imports: [NgbPopoverModule, PipesModule, SkeletonComponent, NgOptimizedImage],
   templateUrl: './home.component.html',
   styles: [],
 })
@@ -50,7 +50,7 @@ export class HomeComponent {
         this.meta.updateMetaTag('og:image', asset);
         setTimeout(() => {
           this.show = true;
-        }, 350);
+        }, 100);
       });
   }
 }

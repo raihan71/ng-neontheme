@@ -33,7 +33,7 @@ export class BlogComponent {
         this.blogs = resp?.items;
         setTimeout(() => {
           this.show = true;
-        }, 350);
+        }, 100);
     }, error(err) {
       console.error(err);
     }});

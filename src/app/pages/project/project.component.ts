@@ -50,7 +50,7 @@ export class ProjectComponent {
           this.projects = updatedProjects;
           setTimeout(() => {
             this.show = true;
-          }, 350);
+          }, 100);
         });
 
       }

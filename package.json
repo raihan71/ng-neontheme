@@ -11,7 +11,7 @@
     "serve:ssr:browser": "node dist/ngsite-hacker/browser/server.mjs",
     "vercel-build": "npm run build:prod && npm run postbuild",
     "serve:ssr:server": "node dist/ngsite-hacker/server/server.mjs",
-    "postbuild": "node postbuild.js dist"
+    "postbuild": "node scripts/purgescss.js dist && node scripts/obfuscate.js"
   },
   "private": true,
   "dependencies": {
@@ -29,8 +29,10 @@
     "@contentful/rich-text-types": "^16.3.0",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
+    "@types/compression": "^1.7.5",
     "@vercel/analytics": "^1.1.1",
     "bootstrap": "^5.3.2",
+    "compression": "^1.7.4",
     "contentful": "^10.6.15",
     "express": "^4.18.2",
     "ngx-skeleton-loader": "^8.1.0",
@@ -48,6 +50,8 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
     "glob": "^10.3.10",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
@@ -56,6 +60,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ngx-sitemap": "^1.0.0",
+    "path": "^0.12.7",
     "purgecss": "^5.0.0",
     "typescript": "~5.2.2"
   }

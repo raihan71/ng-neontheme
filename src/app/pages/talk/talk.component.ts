@@ -20,15 +20,19 @@ export class TalkComponent {
   constructor(private cs: ContentfulService, private meta: MetaService) {}
 
   ngOnInit(): void {
+    const params = {
+      content_type: CONFIG.contentTypeIds.talks,
+      order: '-fields.dateEvent'
+    };
     this.meta.updateTitle(`Talk - ${import.meta.env['NG_APP_NAME']}`);
-    this.cs.getEntries({content_type: CONFIG.contentTypeIds.talks}).subscribe({
+    this.cs.getEntries(params).subscribe({
     next: (entries) => {
       if (entries.length > 0) {
         this.talks = entries;
       }
       setTimeout(() => {
         this.show = true;
-      }, 350);
+      }, 100);
     }});
 
   }

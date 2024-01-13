@@ -46,7 +46,7 @@ export class DetailComponent {
 
         setTimeout(() => {
           this.show = true;
-        }, 350);
+        }, 100);
 
       },
       error: (err) => {

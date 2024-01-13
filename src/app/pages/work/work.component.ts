@@ -26,8 +26,12 @@ export class WorkComponent {
   constructor(private cs: ContentfulService, private meta: MetaService) {}
 
   ngOnInit(): void {
+    const params = {
+      content_type: CONFIG.contentTypeIds.works,
+      order: '-fields.startYear'
+    };
     this.meta.updateTitle(`Work - ${import.meta.env['NG_APP_NAME']}`);
-    this.cs.getEntries({content_type: CONFIG.contentTypeIds.works}).subscribe((works:any[]) => {
+    this.cs.getEntries(params).subscribe((works:any[]) => {
       if (works && works.length > 0) {
         const updatedWorksPromises = works.map((work: any) => {
           if (work.fields && work.fields.logo && work.fields.logo.sys && work.fields.logo.sys.id) {
@@ -52,7 +56,7 @@ export class WorkComponent {
           this.works = updatedWorks.sort((a, b) => (a.fields.isResigned === b.fields.isResigned) ? 0 : a.fields.isResigned ? 1 : -1);
           setTimeout(() => {
             this.show = true;
-          }, 350);
+          }, 100);
         });
       }
     });
