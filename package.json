@@ -11,7 +11,7 @@
     "serve:ssr:browser": "node dist/ngsite-hacker/browser/server.mjs",
     "vercel-build": "npm run build:prod && npm run postbuild",
     "serve:ssr:server": "node dist/ngsite-hacker/server/server.mjs",
-    "postbuild": "node scripts/purgescss.js dist && node scripts/obfuscate.js"
+    "postbuild": "node scripts/purgescss.js dist && node scripts/obfuscate.js && node scripts/minifier.js"
   },
   "private": true,
   "dependencies": {
@@ -53,6 +53,7 @@
     "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
     "glob": "^10.3.10",
+    "html-minifier": "^4.0.0",
     "jasmine-core": "~5.1.0",
     "javascript-obfuscator": "^4.1.0",
     "karma": "~6.4.0",
