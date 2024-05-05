@@ -28,7 +28,7 @@
                               <h5 class="mb-0">{{blog?.title}}</h5>
                               <div class="mb-1 text-muted">{{blog?.pubDate | date:'mediumDate'}}</div>
                               <p class="card-text mb-auto">
-                                {{blog?.description | htmlToPlaintext | ellipsis:70}}
+                                {{blog?.description | ellipsis:70}}
                               </p>
                               <a [href]="blog?.link" target="_blank" class="stretched-link">Continue reading</a>
                             </div>
@@ -52,6 +52,18 @@
             </div>
           </div>
         </div>
+        @if (blogs.length > 0) {
+          <nav class="text-white" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="{{currentPage === 1 ? 'page-item disabled ' : 'page-item'}}">
+                <button (click)="previousPage()" [disabled]="currentPage === 1" class="page-link" tabindex="-1">Previous</button>
+              </li>
+              <li class="{{currentPage === blogs.length ? 'page-item disabled' : 'page-item '}}">
+                <button (click)="nextPage()" [disabled]="currentPage === blogs.length" class="page-link">Next</button>
+              </li>
+            </ul>
+          </nav>
+        }
       </div>
     </div>
   </div>

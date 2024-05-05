@@ -10,6 +10,7 @@ import bootstrap from './src/main.server';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
+
   server.use(compression());
 
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
@@ -41,7 +42,9 @@ export function app(): express.Express {
     routes.forEach(route => {
       const url = root.ele('url');
       url.ele('loc', `https://raihan.my.id${route}`);
-      url.ele('priority', '1.0');
+      url.ele('lastmod', new Date());
+      url.ele('changefreq', 'daily');
+      url.ele('priority', '0.8');
     });
 
     res.header('Content-Type', 'application/xml');
@@ -49,7 +52,7 @@ export function app(): express.Express {
   });
 
   // All regular routes use the Angular engine
-  server.get('*', (req, res, next) => {
+  server.get('*', (req:any, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine

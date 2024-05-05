@@ -23,10 +23,25 @@ export class ProjectComponent {
   projects:any = [];
   show: boolean = false;
   skeletons:any = [1,2,3,4];
+  limit: number = 6;
+  skip: number = 0;
+  currentPage: number = 1;
+
   constructor(private cs: ContentfulService, private meta: MetaService) {}
+
   ngOnInit(): void {
     this.meta.updateTitle(`Project - ${import.meta.env['NG_APP_NAME']}`);
-    this.cs.getEntries({content_type: CONFIG.contentTypeIds.projects}).subscribe((projects:any[]) => {
+    this.fetchProject();
+  }
+
+  fetchProject() {
+    const params = {
+      content_type: CONFIG.contentTypeIds.projects,
+      limit: this.limit,
+      skip: this.skip
+    };
+
+    this.cs.getEntries(params).subscribe((projects:any[]) => {
       if (projects && projects.length > 0) {
         const updatedProjectsPromises = projects.map((project: any) => {
           if (project.fields && project.fields.logo && project.fields.logo.sys && project.fields.logo.sys.id) {
@@ -55,5 +70,25 @@ export class ProjectComponent {
 
       }
     });
+  }
+
+  nextPage() {
+    this.skip += this.limit;
+    this.currentPage++;
+    this.fetchProject();
+    console.log(this.currentPage);
+  }
+
+  previousPage() {
+    this.skip -= this.limit;
+    if (this.skip < 0) {
+      this.skip = 0;
+    }
+    this.currentPage--;
+    if (this.currentPage < 1) {
+      this.currentPage = 1;
+    }
+    this.fetchProject();
+    console.log(this.currentPage);
   }
 }

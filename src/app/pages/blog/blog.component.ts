@@ -24,13 +24,26 @@ export class BlogComponent {
   blogs:any = [];
   show:boolean = false;
   skeletons:any = [1,2,3,4];
+  currentPage = 1;
+  itemsPerPage = 4;
+  totalItems: number = 0;
+
   constructor(private httpService: HttpService, private meta: MetaService) { }
 
   ngOnInit(): void {
     this.meta.updateTitle(`Blog - ${import.meta.env['NG_APP_NAME']}`);
-    this.httpService.get(service.mediumBlog).subscribe(
+    this.fetchBlog();
+
+  }
+
+  fetchBlog() {
+    const startIndex = Math.max(0, (this.currentPage - 1) * this.itemsPerPage);
+    const url = `${service.mediumBlog}&api_key=${import.meta.env['NG_APP_API_KEY']}&count=${this.itemsPerPage}&offset=${startIndex}`;
+    this.httpService.get(url).subscribe(
       {next: (resp: any) => {
         this.blogs = resp?.items;
+        this.totalItems = resp.items.length;
+
         setTimeout(() => {
           this.show = true;
         }, 100);
@@ -38,4 +51,15 @@ export class BlogComponent {
       console.error(err);
     }});
   }
+
+  nextPage() {
+    this.currentPage++;
+    this.fetchBlog();
+  }
+
+  previousPage() {
+    this.currentPage--;
+    this.fetchBlog();
+  }
+
 }

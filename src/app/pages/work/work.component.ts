@@ -22,21 +22,30 @@ export class WorkComponent {
   works:any = [];
   show: boolean = false;
   skeletons:any = [1,2,3,4];
+  limit: number = 6;
+  skip: number = 0;
+  currentPage: number = 1;
 
   constructor(private cs: ContentfulService, private meta: MetaService) {}
 
   ngOnInit(): void {
+    this.meta.updateTitle(`Work - ${import.meta.env['NG_APP_NAME']}`);
+    this.fetchWork();
+  }
+
+  fetchWork() {
     const params = {
       content_type: CONFIG.contentTypeIds.works,
-      order: '-fields.startYear'
+      order: '-fields.startYear',
+      limit: this.limit,
+      skip: this.skip
     };
-    this.meta.updateTitle(`Work - ${import.meta.env['NG_APP_NAME']}`);
+
     this.cs.getEntries(params).subscribe((works:any[]) => {
       if (works && works.length > 0) {
         const updatedWorksPromises = works.map((work: any) => {
           if (work.fields && work.fields.logo && work.fields.logo.sys && work.fields.logo.sys.id) {
             const logoSysId = work.fields.logo.sys.id;
-
             return this.cs.getSingleImg(logoSysId).then((logoAsset: string | undefined) => {
 
               // Update the current work entry with the logoAsset
@@ -61,6 +70,24 @@ export class WorkComponent {
       }
     });
 
+  }
+
+  nextPage() {
+    this.skip += this.limit;
+    this.currentPage++;
+    this.fetchWork();
+  }
+
+  previousPage() {
+    this.skip -= this.limit;
+    if (this.skip < 0) {
+      this.skip = 0;
+    }
+    this.currentPage--;
+    if (this.currentPage < 1) {
+      this.currentPage = 1;
+    }
+    this.fetchWork();
   }
 
 }

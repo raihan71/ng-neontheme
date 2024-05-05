@@ -58,6 +58,18 @@
             </div>
           </div>
         </div>
+        @if (projects.length > 0) {
+          <nav class="text-white" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="{{currentPage === 1 ? 'page-item disabled ' : 'page-item'}}">
+                <button (click)="previousPage()" [disabled]="currentPage === 1" class="page-link" tabindex="-1">Previous</button>
+              </li>
+              <li class="{{currentPage === projects.length ? 'page-item disabled' : 'page-item '}}">
+                <button (click)="nextPage()" [disabled]="currentPage === projects.length" class="page-link">Next</button>
+              </li>
+            </ul>
+          </nav>
+        }
       </div>
     </div>
   </div>
