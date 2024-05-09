@@ -18,6 +18,15 @@
                 </div>
 
               </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 mx-auto d-none d-md-block d-lg-block">
+                @if (image) {
+                  <img
+                    class="rounded-circle shadow-4-strong img-fluid mx-auto d-block"
+                    [alt]="about?.name" [ngSrc]="image"
+                    width="300" height="300" priority
+                  />
+                }
+              </div>
             </div>
           </div>
         </div>

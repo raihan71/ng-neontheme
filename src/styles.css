@@ -1056,3 +1056,51 @@ ul.timeline > li:before {
     height: 20px;
     z-index: 400;
 }
+
+#no-script {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: black;
+  width: 100%;
+}
+
+#no-script-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 3rem;
+  padding: 0.5em;
+  border: 0.2em double yellow;
+  border-radius: 0.5em;
+  background-color: hsl(51, 94%, 81%);
+}
+
+#no-script-img {
+  width: 200px;
+}
+
+#no-script-maintext {
+  font-size: 3rem;
+}
+
+#no-script-subtext {
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 758px) {
+  #no-script-maintext {
+    font-size: 2rem;
+  }
+
+  #no-script-subtext {
+    font-size: 1.2rem;
+  }
+
+  #no-script-img {
+    width: 100px;
+  }
+}

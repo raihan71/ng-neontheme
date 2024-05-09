@@ -4,8 +4,9 @@ import { NotfoundComponent } from './shared/notfound/notfound.component';
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'home'
+    loadComponent: () =>
+    import('./pages/home/home.component')
+        .then(m => m.HomeComponent)
   },
   {
     path: 'home',
