@@ -1,3 +1,1 @@
-const server = import('../dist/ngsite-hacker/server/server.mjs');
-
-module.exports = server.app;
+export default import('../dist/ngsite-hacker/server/server.mjs').then(module => module.app());
