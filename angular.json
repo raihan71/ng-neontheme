@@ -25,11 +25,10 @@
             "styles": [
               "src/styles.css",
               "src/assets/css/bootstrap4-neon-glow.min.css",
-              "src/assets/css/font-all.css",
-              "src/assets/css/hack.min.css"
+              "src/assets/css/font-all.css"
             ],
             "scripts": [
-              "src/assets/js/jquery-3.3.1.min.js",
+              "src/assets/js/jquery-3.3.1.slim.min.js",
               "src/assets/js/popper.min.js",
               "src/assets/js/bootstrap.min.js"
             ],
