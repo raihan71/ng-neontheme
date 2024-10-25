@@ -16,6 +16,7 @@
             "outputPath": "dist/ngsite-hacker",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "polyfills": [],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -135,6 +136,7 @@
         "test": {
           "builder": "@ngx-env/builder:karma",
           "options": {
+            "polyfills": [],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",

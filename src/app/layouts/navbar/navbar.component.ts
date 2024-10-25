@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   standalone: true,

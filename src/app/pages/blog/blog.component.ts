@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { environment } from '../../../environments/environment';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -28,7 +28,10 @@ export class BlogComponent {
   itemsPerPage = 4;
   totalItems: number = 0;
 
-  constructor(private httpService: HttpService, private meta: MetaService) { }
+  constructor(private httpService: HttpService,
+    private meta: MetaService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.meta.updateTitle(`Blog - ${import.meta.env['NG_APP_NAME']}`);
@@ -44,8 +47,9 @@ export class BlogComponent {
         this.blogs = resp?.items;
         this.totalItems = resp.items.length;
 
-        setTimeout(() => {
+        setInterval(() => {
           this.show = true;
+          this.cdr.detectChanges();
         }, 100);
     }, error(err) {
       console.error(err);

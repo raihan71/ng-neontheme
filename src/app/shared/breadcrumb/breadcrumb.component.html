@@ -1,0 +1,13 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    @for (item of items; track $index) {
+      <li class="breadcrumb-item" [ngClass]="{'active text-muted': item.url === ''}">
+        @if (item.url) {
+          <a [routerLink]="item.url">{{item.label}}</a>
+        } @else {
+          {{item.label}}
+        }
+      </li>
+    }
+  </ol>
+</nav>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { ContentfulService } from '../../services/contentful.service';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
@@ -26,7 +26,9 @@ export class WorkComponent {
   skip: number = 0;
   currentPage: number = 1;
 
-  constructor(private cs: ContentfulService, private meta: MetaService) {}
+  constructor(private cs: ContentfulService, private meta: MetaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.meta.updateTitle(`Work - ${import.meta.env['NG_APP_NAME']}`);
@@ -63,8 +65,9 @@ export class WorkComponent {
         // Wait for all promises to resolve
         Promise.all(updatedWorksPromises).then((updatedWorks) => {
           this.works = updatedWorks.sort((a, b) => (a.fields.isResigned === b.fields.isResigned) ? 0 : a.fields.isResigned ? 1 : -1);
-          setTimeout(() => {
+          setInterval(() => {
             this.show = true;
+            this.cdr.detectChanges();
           }, 100);
         });
       }

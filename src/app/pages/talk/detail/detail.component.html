@@ -1,8 +1,9 @@
 <main role="main">
   <div class="ht-main">
-    <div class="ht-tm-wrapper">
+    <div class="ht-tm-wrapper mt-80">
       <div class="container ht-tm-container">
-        <div class="row mt-100">
+        <app-breadcrumb [items]="breadcrumb"></app-breadcrumb>
+        <div class="row">
           <div class="col-md-8 col-sm-12 col-xs-12 blog-main">
             @if (!show) {
               <app-skeleton />
@@ -28,7 +29,7 @@
                 <h4 class="font-italic">Quote</h4>
                 <blockquote class="blockquote mb-0 ">
                   <p>
-                    {{quote?.content}}
+                    {{quote?.quote}}
                   </p>
                   <footer class="blockquote-footer">
                     <small class="text-muted">

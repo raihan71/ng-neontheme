@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
@@ -17,7 +17,9 @@ export class TalkComponent {
   talks:any = [];
   show:boolean = false;
 
-  constructor(private cs: ContentfulService, private meta: MetaService) {}
+  constructor(private cs: ContentfulService, private meta: MetaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     const params = {
@@ -30,8 +32,9 @@ export class TalkComponent {
       if (entries.length > 0) {
         this.talks = entries;
       }
-      setTimeout(() => {
+      setInterval(() => {
         this.show = true;
+        this.cdr.detectChanges();
       }, 100);
     }});
 

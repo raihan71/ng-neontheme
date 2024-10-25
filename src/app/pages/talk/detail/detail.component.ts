@@ -1,23 +1,30 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { HttpService } from './../../../services/http.service';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { ContentfulService } from '../../../services/contentful.service';
-import { environment } from '../../../../environments/environment';
 import { service } from '../../../constant/service';
-import { MetaService } from '../../../services/metaseo.service';
-const CONFIG = environment.contentful_config;
+import { BreadcrumbComponent } from "../../../shared/breadcrumb/breadcrumb.component";
+
 @Component({
   selector: 'app-talk-detail',
   standalone: true,
-  imports: [SkeletonComponent, PipesModule],
+  imports: [SkeletonComponent, PipesModule, BreadcrumbComponent],
   templateUrl: './detail.component.html',
-  styles: [`.mt-100 { margin-top: 100px;}`]
+  styles: [`.mt-80 { margin-top: 80px;}`]
 })
 export class DetailComponent {
   show:boolean = false;
+  private readonly title = inject(Title);
+  private readonly metaTag = inject(Meta);
+  breadcrumb:any[] = [
+    {label: 'Home', url: '/'},
+    {label: 'Talks', url: '/talk'},
+    {label: 'Detail', url: ''}
+  ]
   talk:any = {};
   quote:any = {};
 
@@ -25,27 +32,28 @@ export class DetailComponent {
       private cs: ContentfulService,
       private route: ActivatedRoute,
       private httpService: HttpService,
-      private meta: MetaService
+      private cdr: ChangeDetectorRef
     ){}
 
   ngOnInit(): void {
-    // Create an observable for each HTTP request
     const entry$ = this.cs.getEntry(this.route.snapshot.paramMap.get('id'));
     const quote$ = this.httpService.get(service.randomQuote);
-
-    // Use forkJoin to combine the observables and wait for both to complete
     forkJoin({
       entry: entry$,
       quote: quote$
     }).subscribe({
       next: ({ entry, quote }) => {
-        this.meta.updateTitle(`${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}`);
-        this.meta.updateMetaTag('og:title', entry['title']);
+        this.title.setTitle(`${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}`);
+        this.metaTag.updateTag({ name: 'description', content: `${entry['shortDesc']}` });
+        this.metaTag.updateTag({ name: 'og:title', content: `${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}` });
+        this.metaTag.updateTag({ name: 'og:description', content: `${entry['shortDesc']}` });
+        this.metaTag.updateTag({ name: 'og:url', content: `${window.location.href}` });
         this.talk = entry;
         this.quote = quote;
 
-        setTimeout(() => {
+        setInterval(() => {
           this.show = true;
+          this.cdr.detectChanges();
         }, 100);
 
       },

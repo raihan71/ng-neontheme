@@ -1,14 +1,13 @@
-import { Component, Optional, TransferState, makeStateKey, InjectionToken } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { NgOptimizedImage } from '@angular/common';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
 import { forkJoin, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ContentfulService } from '../../services/contentful.service';
 import { PipesModule } from '../../pipes/pipes.module';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 import { environment } from '../../../environments/environment';
-import { MetaService } from './../../services/metaseo.service';
 
 const CONFIG = environment.contentful_config;
 @Component({
@@ -24,15 +23,16 @@ export class HomeComponent {
   image:any = '';
   socials:any = [];
   currentWork: any = {};
+  private readonly title = inject(Title);
+  private readonly metaTag = inject(Meta);
 
   constructor(
     private cs: ContentfulService,
-    private meta:MetaService,
-    private http: HttpClient,
+    private cdr: ChangeDetectorRef
     ) {}
   ngOnInit() {
-    this.meta.updateTitle(`Home - ${import.meta.env['NG_APP_NAME']}`);
-    this.meta.updateMetaTag('og:image', '/src/assets/images/raihan.png');
+    this.title.setTitle(`Home - ${import.meta.env['NG_APP_NAME']}`);
+    this.metaTag.updateTag({ name: 'og:image', content: '/src/assets/images/raihan.png' });
     forkJoin({
       aboutMe: this.cs.getEntry(import.meta.env['NG_APP_ABOUTME']),
       socials: from(this.cs.getEntries({content_type: CONFIG.contentTypeIds.socials})),
@@ -54,8 +54,9 @@ export class HomeComponent {
       )
       .subscribe(asset => {
         this.image = asset;
-        setTimeout(() => {
+        setInterval(() => {
           this.show = true;
+          this.cdr.detectChanges();
         }, 100);
       });
   }

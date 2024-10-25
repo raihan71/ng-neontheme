@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ContentfulService } from '../../services/contentful.service';
 import { environment } from '../../../environments/environment';
 import { MetaService } from '../../services/metaseo.service';
+
 const CONFIG = environment.contentful_config;
 @Component({
   selector: 'app-project',
@@ -27,7 +28,10 @@ export class ProjectComponent {
   skip: number = 0;
   currentPage: number = 1;
 
-  constructor(private cs: ContentfulService, private meta: MetaService) {}
+  constructor(private cs: ContentfulService,
+    private meta: MetaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.meta.updateTitle(`Project - ${import.meta.env['NG_APP_NAME']}`);
@@ -56,15 +60,15 @@ export class ProjectComponent {
             });
           }
 
-          // If the entry doesn't have the necessary fields, return the original entry
           return project;
         });
 
         // Wait for all promises to resolve
         Promise.all(updatedProjectsPromises).then((updatedProjects) => {
           this.projects = updatedProjects;
-          setTimeout(() => {
+          setInterval(() => {
             this.show = true;
+            this.cdr.detectChanges();
           }, 100);
         });
 
@@ -76,7 +80,6 @@ export class ProjectComponent {
     this.skip += this.limit;
     this.currentPage++;
     this.fetchProject();
-    console.log(this.currentPage);
   }
 
   previousPage() {
@@ -89,6 +92,5 @@ export class ProjectComponent {
       this.currentPage = 1;
     }
     this.fetchProject();
-    console.log(this.currentPage);
   }
 }
