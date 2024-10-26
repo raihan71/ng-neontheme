@@ -53,6 +53,7 @@ export function app(): express.Express {
 
   // All regular routes use the Angular engine
   server.get('*', (req:any, res, next) => {
+    res.set('Cache-Control', 'public, max-age=31557600');
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine

@@ -3,13 +3,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ToHtmlPipe } from './richtext-to-html.pipe';
 import { SanitizedHtmlPipe } from './sanitized-html.pipe';
 import { EllipsisPipe } from './elipsis.pipe';
-import { HtmlToPlaintextPipe } from './html-to-text.pipe';
+import { htmlToPlaintextPipe } from './html-to-text.pipe';
 
 @NgModule({
-  declarations: [ToHtmlPipe, SanitizedHtmlPipe, EllipsisPipe, HtmlToPlaintextPipe],
+  declarations: [ToHtmlPipe, SanitizedHtmlPipe, EllipsisPipe, htmlToPlaintextPipe],
   imports: [
     CommonModule
   ],
-  exports: [ToHtmlPipe, SanitizedHtmlPipe, EllipsisPipe, DatePipe, HtmlToPlaintextPipe],
+  exports: [ToHtmlPipe, SanitizedHtmlPipe, EllipsisPipe, DatePipe, htmlToPlaintextPipe],
 })
 export class PipesModule { }

@@ -12,7 +12,7 @@ import { BreadcrumbComponent } from "../../../shared/breadcrumb/breadcrumb.compo
 @Component({
   selector: 'app-talk-detail',
   standalone: true,
-  imports: [SkeletonComponent, PipesModule, BreadcrumbComponent],
+  imports: [SkeletonComponent, BreadcrumbComponent, PipesModule],
   templateUrl: './detail.component.html',
   styles: [`.mt-80 { margin-top: 80px;}`]
 })
@@ -47,7 +47,7 @@ export class DetailComponent {
         this.metaTag.updateTag({ name: 'description', content: `${entry['shortDesc']}` });
         this.metaTag.updateTag({ name: 'og:title', content: `${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}` });
         this.metaTag.updateTag({ name: 'og:description', content: `${entry['shortDesc']}` });
-        this.metaTag.updateTag({ name: 'og:url', content: `${window.location.href}` });
+        this.metaTag.updateTag({ name: 'og:url', content: `/talk/${this.route.snapshot.paramMap.get('id')}` });
         this.talk = entry;
         this.quote = quote;
 

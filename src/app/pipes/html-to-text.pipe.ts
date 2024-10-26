@@ -1,14 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'htmlToPlaintext'
+  name: 'htmlToPlaintext'
 })
-export class HtmlToPlaintextPipe implements PipeTransform {
-    transform(value: any): any {
-        if (typeof document !== 'undefined') {
-          const temp = document?.createElement('div');
-          temp.innerHTML = value;
-          return temp.textContent || temp.innerText || '';
-        }
+export class htmlToPlaintextPipe implements PipeTransform {
+  transform(value: string): string {
+    if (typeof window !== 'undefined') {
+      const div = window.document.createElement('div');
+      div.innerHTML = value;
+      return div.textContent || div.innerText || '';
+    } else {
+      return value.replace(/<[^>]*>/g, '');
     }
+  }
 }
