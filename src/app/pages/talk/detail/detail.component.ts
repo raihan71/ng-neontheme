@@ -45,9 +45,12 @@ export class DetailComponent {
       next: ({ entry, quote }) => {
         this.title.setTitle(`${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}`);
         this.metaTag.updateTag({ name: 'description', content: `${entry['shortDesc']}` });
+        this.metaTag.updateTag({ name: 'og:site_name', content: `${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}` });
         this.metaTag.updateTag({ name: 'og:title', content: `${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}` });
         this.metaTag.updateTag({ name: 'og:description', content: `${entry['shortDesc']}` });
         this.metaTag.updateTag({ name: 'og:url', content: `/talk/${this.route.snapshot.paramMap.get('id')}` });
+        this.metaTag.updateTag({ name: 'twitter:title', content: `${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}` });
+        this.metaTag.updateTag({ name: 'twitter:description', content: `${entry['title']} - Talk by ${import.meta.env['NG_APP_NAME']}` });
         this.talk = entry;
         this.quote = quote;
 

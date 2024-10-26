@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
-import { Title, Meta } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { NgOptimizedImage } from '@angular/common';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, from } from 'rxjs';
@@ -24,7 +24,6 @@ export class HomeComponent {
   socials:any = [];
   currentWork: any = {};
   private readonly title = inject(Title);
-  private readonly metaTag = inject(Meta);
 
   constructor(
     private cs: ContentfulService,
@@ -32,7 +31,6 @@ export class HomeComponent {
     ) {}
   ngOnInit() {
     this.title.setTitle(`Home - ${import.meta.env['NG_APP_NAME']}`);
-    this.metaTag.updateTag({ name: 'og:image', content: '/src/assets/images/raihan.png' });
     forkJoin({
       aboutMe: this.cs.getEntry(import.meta.env['NG_APP_ABOUTME']),
       socials: from(this.cs.getEntries({content_type: CONFIG.contentTypeIds.socials})),
