@@ -1,4 +1,4 @@
-<h1 align="center">🅰️ Welcome to Ng-NeonTheme 🅰️</h1>
+<h1 align="center">🅰️ Welcome to Ng-NeonTheme by Raihan Nismara 🅰️</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-(1.0.0)-blue.svg?cacheSeconds=2592000" />
   <a href="https://twitter.com/rayhan\_nj" target="_blank">
