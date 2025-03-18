@@ -18,7 +18,7 @@
                       <li tabindex="0">
                         <div class="card bg-transparent border">
                           <div class="card-body">
-                            <a [routerLink]="['/talk', talk?.sys?.id]">{{talk?.fields?.title}}</a>
+                            <a class="text-primary" [routerLink]="['/talk', talk?.sys?.id]">{{talk?.fields?.title}}</a>
                             <a href="javascript:;" class="float-right">{{talk?.fields?.dateEvent | date: "mediumDate"}}</a>
                             <p>{{talk?.fields?.shortDesc | ellipsis}}</p>
                           </div>
