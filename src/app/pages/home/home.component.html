@@ -7,24 +7,38 @@
             <div class="row">
               <div class="col-xl-6" tabindex="0">
                 @if (!show) {
-                  <app-skeleton page="Home" />
+                <app-skeleton page="Home" />
                 } @else {
-                  <h1 class="display-2">{{about?.name?.slice(0, -1)}}<span class="vim-caret">{{about?.name?.slice(-1)}}</span></h1>
-                  <div [innerHtml]="about?.tagLine | sanitizedHtml"></div>
-                  <div [innerHTML]="about?.shortBio | sanitizedHtml"></div>
+                <h1 class="display-2">
+                  {{ about?.name?.slice(0, -1)
+                  }}<span class="vim-caret">{{ about?.name?.slice(-1) }}</span>
+                </h1>
+                <div [innerHtml]="about?.tagLine | sanitizedHtml"></div>
+                <div [innerHTML]="about?.shortBio | sanitizedHtml"></div>
                 }
                 <div class="text-mono">
-                  <button class="btn btn-outline-success px-3 my-2 ml-0 text-left" data-toggle="modal" data-target="#exampleModalCenter">Read More</button>
+                  <button
+                    class="btn btn-outline-success px-3 my-2 ml-0 text-left"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                  >
+                    Read More
+                  </button>
                 </div>
-
               </div>
-              <div class="col-md-6 col-sm-6 col-xs-6 mx-auto d-none d-md-block d-lg-block">
+              <div
+                class="col-md-6 col-sm-6 col-xs-6 mx-auto d-none d-md-block d-lg-block"
+              >
                 @if (image) {
-                  <img
-                    class="rounded-circle shadow-4-strong img-fluid mx-auto d-block"
-                    [alt]="about?.name" [ngSrc]="image"
-                    width="300" height="300" priority
-                  />
+                <img
+                  class="rounded-circle shadow-4-strong img-fluid mx-auto d-block"
+                  [alt]="about?.name"
+                  [ngSrc]="image"
+                  width="300"
+                  height="300"
+                  priority
+                  loading="eager"
+                />
                 }
               </div>
             </div>
@@ -41,16 +55,22 @@
     <div class="row">
       <div class="col-md-12">
         @for (social of socials; track $index) {
-          <a [href]="social.fields?.url" target="_blank" class="ht-tm-element btn btn-outline-light"
-            [ngbPopover]="'Follow Me On '+social.fields?.name"
-            triggers="mouseenter:mouseleave"
-            placement="end"
-          >
-            <span [class]="'fab fa-'+social.fields?.icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Follow {{social.fields?.name}}</span>
-          </a>
+        <a
+          [href]="social.fields?.url"
+          target="_blank"
+          class="ht-tm-element btn btn-outline-light"
+          [ngbPopover]="'Follow Me On ' + social.fields?.name"
+          triggers="mouseenter:mouseleave"
+          placement="end"
+        >
+          <span
+            [class]="'fab fa-' + social.fields?.icon"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Follow {{ social.fields?.name }}</span>
+        </a>
         } @empty {
-          <app-skeleton />
+        <app-skeleton />
         }
       </div>
     </div>
@@ -58,11 +78,23 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div
+  class="modal fade bd-example-modal-lg"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close text-white"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -72,19 +104,26 @@
             <div class="col-md-4 col-sm-12 col-xs-12 align-self-center">
               <div class="col-md-10 col-sm-6 col-xs-12 mx-auto d-block">
                 @if (image) {
-                  <img
-                    class="rounded-circle shadow-4-strong img-fluid mx-auto d-block"
-                    [alt]="about?.name" [ngSrc]="image"
-                    width="2067" height="2067" priority
-                  />
+                <img
+                  class="rounded-circle shadow-4-strong img-fluid mx-auto d-block"
+                  [alt]="about?.name"
+                  [ngSrc]="image"
+                  width="2067"
+                  height="2067"
+                  priority
+                />
                 }
               </div>
               <div class="col-12 pt-4">
-                <p class="text-center font-weight-bold">{{about?.name}}</p>
+                <p class="text-center font-weight-bold">{{ about?.name }}</p>
               </div>
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
-              <h6 class="font-weight-bold">{{currentWork?.position}} &#64; {{currentWork?.company}}</h6>
+              @if (currentWork) {
+              <h6 class="font-weight-bold">
+                {{ currentWork?.position }} &#64; {{ currentWork?.company }}
+              </h6>
+              }
               <div [innerHTML]="about?.fullBio | sanitizedHtml"></div>
             </div>
           </div>

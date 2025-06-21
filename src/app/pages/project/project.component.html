@@ -39,31 +39,38 @@
                             <div class="col-12 p-5 d-block bg-dark rounded-top">
                               <div
                                 class="col-md-6 col-sm-12 col-xs-12 mx-auto d-block"
+                                style="height: 100px; overflow: hidden"
                               >
-                                <img
-                                  class="rounded shadow-4-strong img-fluid mx-auto d-block"
-                                  [ngSrc]="project?.logoAsset"
-                                  [alt]="
-                                    'image screenshot project ' +
-                                    project?.fields?.title
-                                  "
-                                  width="187"
-                                  height="187"
-                                  priority
-                                />
+                                <div
+                                  class="d-flex justify-content-center align-items-center"
+                                  style="height: 100%"
+                                >
+                                  <img
+                                    class="rounded shadow-4-strong img-fluid"
+                                    [ngSrc]="project?.logoAsset"
+                                    [alt]="
+                                      'image screenshot project ' +
+                                      project?.fields?.title
+                                    "
+                                    width="187"
+                                    height="187"
+                                    priority
+                                    loading="eager"
+                                  />
+                                </div>
                               </div>
                             </div>
-                            <div class="card-body">
-                              <h4 class="card-title">
+                            <div class="card-body d-flex flex-column">
+                              <h4 class="card-title flex-grow-1">
                                 {{ project?.fields?.title }}
                               </h4>
-                              <p class="card-text">
-                                {{ project?.fields?.shortDesc }}
+                              <p class="card-text flex-grow-1">
+                                {{ project?.fields?.shortDesc | ellipsis : 72 }}
                               </p>
                               <a
                                 [href]="project?.fields?.url"
                                 target="_blank"
-                                class="btn btn-primary"
+                                class="btn btn-primary mt-auto"
                                 >See demo</a
                               >
                             </div>

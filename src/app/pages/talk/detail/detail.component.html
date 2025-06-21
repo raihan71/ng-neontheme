@@ -3,59 +3,71 @@
     <div class="ht-tm-wrapper mt-80">
       <div class="container ht-tm-container">
         <app-breadcrumb [items]="breadcrumb"></app-breadcrumb>
-        <div class="row">
+        <div class="row mt-2">
           <div class="col-md-8 col-sm-12 col-xs-12 blog-main">
             @if (!show) {
-              <app-skeleton />
+            <app-skeleton />
             } @else {
-              <div class="blog-post">
-                <h2 class="blog-post-title">{{talk?.title}}</h2>
-                <div class="d-flex justify-content-between">
-                  <p class="blog-post-meta">{{talk?.dateEvent | date:'longDate'}}</p>
-                  @if (talk?.eventName) {
-                    <p class="blog-post-meta pr-5 text-right"><a [href]="talk?.url" target="_blank">&#64; {{talk?.eventName}}</a></p>
-                  }
-                </div>
-                <div class="row col-12 text-wrap" style="flex-wrap: wrap!important;" [innerHTML]="talk?.longDesc | toHtml"></div>
-              </div><!-- /.blog-post -->
+            <div class="blog-post">
+              <h2 class="blog-post-title">{{ talk?.title }}</h2>
+              <div class="d-flex justify-content-between">
+                <p class="blog-post-meta">
+                  {{ talk?.dateEvent | date : "longDate" }}
+                </p>
+                @if (talk?.eventName) {
+                <p class="blog-post-meta pr-5 text-right">
+                  <a [href]="talk?.url" target="_blank"
+                    >&#64; {{ talk?.eventName }}</a
+                  >
+                </p>
+                }
+              </div>
+              <div
+                class="row col-12 text-wrap"
+                style="flex-wrap: wrap !important"
+                [innerHTML]="talk?.longDesc | toHtml"
+              ></div>
+            </div>
+            <!-- /.blog-post -->
             }
-          </div><!-- /.blog-main -->
+          </div>
+          <!-- /.blog-main -->
 
           <aside class="col-md-4 col-sm-12 col-xs-12 blog-sidebar">
             @if (!show) {
-              <app-skeleton [count]="2" width="200px" />
+            <app-skeleton [count]="2" width="200px" />
             } @else {
-              <div class="card p-3">
-                <h4 class="font-italic">Quote</h4>
-                <blockquote class="blockquote mb-0 ">
-                  <p>
-                    {{quote?.quote}}
-                  </p>
-                  <footer class="blockquote-footer">
-                    <small class="text-muted">
-                      <cite title="Source Title">{{quote?.author}}</cite>
-                    </small>
-                  </footer>
-                </blockquote>
-              </div>
+            <div class="card p-3">
+              <h4 class="font-italic">Quote</h4>
+              <blockquote class="blockquote mb-0">
+                <p>
+                  {{ quote?.quote }}
+                </p>
+                <footer class="blockquote-footer">
+                  <small class="text-muted">
+                    <cite title="Source Title">{{ quote?.author }}</cite>
+                  </small>
+                </footer>
+              </blockquote>
+            </div>
 
-              <div class="p-4">
-                <h4 class="font-italic">Archives</h4>
-                <ol class="list-unstyled mb-0">
-                  <li><a href="">March 2014</a></li>
-                  <li><a href="">February 2014</a></li>
-                  <li><a href="">January 2014</a></li>
-                  <li><a href="">December 2013</a></li>
-                  <li><a href="">November 2013</a></li>
-                  <li><a href="">October 2013</a></li>
-                  <li><a href="">September 2013</a></li>
-                  <li><a href="">August 2013</a></li>
-                  <li><a href="">July 2013</a></li>
-                  <li><a href="">June 2013</a></li>
-                  <li><a href="">May 2013</a></li>
-                  <li><a href="">April 2013</a></li>
-                </ol>
-              </div>
+            <div class="p-4">
+              <h4 class="font-italic">Archives</h4>
+              <ol class="list-unstyled mb-0">
+                <li><a href="">March 2014</a></li>
+                <li><a href="">February 2014</a></li>
+                <li><a href="">January 2014</a></li>
+                <li><a href="">December 2013</a></li>
+                <li><a href="">November 2013</a></li>
+                <li><a href="">October 2013</a></li>
+                <li><a href="">September 2013</a></li>
+                <li><a href="">August 2013</a></li>
+                <li><a href="">July 2013</a></li>
+                <li><a href="">June 2013</a></li>
+                <li><a href="">May 2013</a></li>
+                <li><a href="">April 2013</a></li>
+              </ol>
+            </div>
             }
 
             <!-- <div class="p-4">
@@ -66,8 +78,10 @@
                 <li><a href="#">Facebook</a></li>
               </ol>
             </div> -->
-          </aside><!-- /.blog-sidebar -->
-        </div><!-- /.row -->
+          </aside>
+          <!-- /.blog-sidebar -->
+        </div>
+        <!-- /.row -->
       </div>
     </div>
   </div>

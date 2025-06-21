@@ -9,24 +9,28 @@ const CONFIG = environment.contentful_config;
 @Component({
   selector: 'app-work',
   standalone: true,
-  imports: [SkeletonComponent,PipesModule,NgOptimizedImage],
+  imports: [SkeletonComponent, PipesModule, NgOptimizedImage],
   templateUrl: './work.component.html',
   styles: [
-    `.card-work:hover {
-      border-color: #006cff!important;
-      box-shadow: 0 0 50px 15px #2983fe;
-    }`
-  ]
+    `
+      .card-work:hover {
+        border-color: #006cff !important;
+        box-shadow: 0 0 50px 15px #2983fe;
+      }
+    `,
+  ],
 })
 export class WorkComponent {
-  works:any = [];
+  works: any = [];
   show: boolean = false;
-  skeletons:any = [1,2,3,4];
+  skeletons: any = [1, 2, 3, 4];
   limit: number = 6;
   skip: number = 0;
   currentPage: number = 1;
 
-  constructor(private cs: ContentfulService, private meta: MetaService,
+  constructor(
+    private cs: ContentfulService,
+    private meta: MetaService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -40,22 +44,28 @@ export class WorkComponent {
       content_type: CONFIG.contentTypeIds.works,
       order: '-fields.startYear',
       limit: this.limit,
-      skip: this.skip
+      skip: this.skip,
     };
 
-    this.cs.getEntries(params).subscribe((works:any[]) => {
+    this.cs.getEntries(params).subscribe((works: any[]) => {
       if (works && works.length > 0) {
         const updatedWorksPromises = works.map((work: any) => {
-          if (work.fields && work.fields.logo && work.fields.logo.sys && work.fields.logo.sys.id) {
+          if (
+            work.fields &&
+            work.fields.logo &&
+            work.fields.logo.sys &&
+            work.fields.logo.sys.id
+          ) {
             const logoSysId = work.fields.logo.sys.id;
-            return this.cs.getSingleImg(logoSysId).then((logoAsset: string | undefined) => {
-
-              // Update the current work entry with the logoAsset
-              return {
-                ...work,
-                logoAsset: logoAsset
-              };
-            });
+            return this.cs
+              .getSingleImg(logoSysId)
+              .then((logoAsset: string | undefined) => {
+                // Update the current work entry with the logoAsset
+                return {
+                  ...work,
+                  logoAsset: logoAsset,
+                };
+              });
           }
 
           // If the entry doesn't have the necessary fields, return the original entry
@@ -64,7 +74,11 @@ export class WorkComponent {
 
         // Wait for all promises to resolve
         Promise.all(updatedWorksPromises).then((updatedWorks) => {
-          this.works = updatedWorks.sort((a, b) => (a.fields.isResigned === b.fields.isResigned) ? 0 : a.fields.isResigned ? 1 : -1);
+          this.works = updatedWorks.sort((a, b) => {
+            const endYearA = a.fields.endYear || 0;
+            const endYearB = b.fields.endYear || 0;
+            return endYearB - endYearA;
+          });
           setInterval(() => {
             this.show = true;
             this.cdr.detectChanges();
@@ -72,7 +86,6 @@ export class WorkComponent {
         });
       }
     });
-
   }
 
   nextPage() {
@@ -92,5 +105,4 @@ export class WorkComponent {
     }
     this.fetchWork();
   }
-
 }

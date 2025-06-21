@@ -4,7 +4,9 @@
       <div class="container ht-tm-container">
         <div class="row">
           <div class="col-xl-12">
-            <h2 class="display-4 ht-tm-component-title">Update Everyda<span class="vim-caret">y</span></h2>
+            <h2 class="display-4 ht-tm-component-title">
+              Update Everyda<span class="vim-caret">y</span>
+            </h2>
           </div>
         </div>
         <div class="row">
@@ -13,39 +15,59 @@
               <div class="ht-tm-componentsblock">
                 <div class="ht-tm-cat ht-tm-btn-replaceable">
                   <div class="row">
-                    @if (!show) {
-                      @for (item of skeletons; track $index) {
-                        <div class="col-md-6">
-                          <app-skeleton page="Blog" />
-                        </div>
-                      }
-                    } @else {
-                        @for (blog of blogs; track $index) {
-                        <div class="col-md-6" tabindex="0">
-                          <div class="row card-blog no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                            <div class="col p-4 d-flex flex-column position-static">
-                              <strong class="d-inline-block mb-2 text-primary">{{blog?.categories[0]}}</strong>
-                              <h5 class="mb-0">{{blog?.title}}</h5>
-                              <div class="mb-1 text-muted">{{blog?.pubDate | date:'mediumDate'}}</div>
-                              <p class="card-text mb-auto">
-                                {{blog?.description | ellipsis:70}}
-                              </p>
-                              <a [href]="blog?.link" target="_blank" class="stretched-link">Continue reading</a>
-                            </div>
-                            <div class="col-auto d-none d-lg-block">
-                              <svg class="bd-placeholder-img" width="200" height="276" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-                            </div>
+                    @if (!show) { @for (item of skeletons; track $index) {
+                    <div class="col-md-6">
+                      <app-skeleton page="Blog" />
+                    </div>
+                    } } @else { @for (blog of blogs; track $index) {
+                    <div class="col-md-6" tabindex="0">
+                      <div
+                        class="row card-blog no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+                      >
+                        <div class="col p-4 d-flex flex-column position-static">
+                          <strong class="d-inline-block mb-2 text-primary">{{
+                            blog?.categories[0]
+                          }}</strong>
+                          <h5 class="mb-0">{{ blog?.title }}</h5>
+                          <div class="mb-1 text-muted">
+                            {{ blog?.pubDate | date : "mediumDate" }}
                           </div>
+                          <p class="card-text mb-auto">
+                            {{ blog?.description | ellipsis : 70 }}
+                          </p>
+                          <a
+                            [href]="blog?.link"
+                            target="_blank"
+                            class="stretched-link"
+                            >Continue reading</a
+                          >
                         </div>
-                      } @empty {
-                        @for (item of skeletons; track $index) {
-                          <div class="col-md-6">
-                            <app-skeleton page="Blog" />
-                          </div>
-                        }
-                      }
-                    }
+                        <div class="col-auto d-none d-lg-block">
+                          <svg
+                            class="bd-placeholder-img"
+                            width="200"
+                            height="276"
+                            xmlns="http://www.w3.org/2000/svg"
+                            role="img"
+                            aria-label="Placeholder: Thumbnail"
+                            preserveAspectRatio="xMidYMid slice"
+                            focusable="false"
+                          >
+                            <title>{{ blog?.title }}</title>
+                            <rect
+                              width="100%"
+                              height="100%"
+                              [attr.fill]="blog?.thumbnailColor"
+                            ></rect>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    } @empty { @for (item of skeletons; track $index) {
+                    <div class="col-md-6">
+                      <app-skeleton page="Blog" />
+                    </div>
+                    } } }
                   </div>
                 </div>
               </div>
@@ -53,16 +75,39 @@
           </div>
         </div>
         @if (blogs.length > 0) {
-          <nav class="text-white" aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="{{currentPage === 1 ? 'page-item disabled ' : 'page-item'}}">
-                <button (click)="previousPage()" [disabled]="currentPage === 1" class="page-link" tabindex="-1">Previous</button>
-              </li>
-              <li class="{{currentPage === blogs.length ? 'page-item disabled' : 'page-item '}}">
-                <button (click)="nextPage()" [disabled]="currentPage === blogs.length" class="page-link">Next</button>
-              </li>
-            </ul>
-          </nav>
+        <nav class="text-white" aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li
+              class="{{
+                currentPage === 1 ? 'page-item disabled ' : 'page-item'
+              }}"
+            >
+              <button
+                (click)="previousPage()"
+                [disabled]="currentPage === 1"
+                class="page-link"
+                tabindex="-1"
+              >
+                Previous
+              </button>
+            </li>
+            <li
+              class="{{
+                currentPage === blogs.length
+                  ? 'page-item disabled'
+                  : 'page-item '
+              }}"
+            >
+              <button
+                (click)="nextPage()"
+                [disabled]="currentPage === blogs.length"
+                class="page-link"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
         }
       </div>
     </div>

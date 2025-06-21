@@ -1,12 +1,18 @@
 <app-analytics-gtag />
-<a class="visually-hidden-focusable" [href]="skipLinkPath">Skip to main content</a>
+<a class="visually-hidden-focusable" [href]="skipLinkPath"
+  >Skip to main content</a
+>
 <app-navbar />
 <router-outlet id="content"></router-outlet>
 <app-footer />
 @if (activateGoTop) {
-  <button
-    (click)="scrollToTop()"
-    id="back-to-top" class="btn btn-dark btn-lg back-to-top" role="button">
-    <i class="fas fa-chevron-up"></i>
-  </button>
+<button
+  (click)="scrollToTop()"
+  id="back-to-top"
+  class="btn btn-dark btn-lg back-to-top"
+  role="button"
+>
+  <span class="visually-hidden">Back to top</span>
+  <i class="fas fa-chevron-up"></i>
+</button>
 }

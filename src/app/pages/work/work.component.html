@@ -4,7 +4,9 @@
       <div class="container ht-tm-container">
         <div class="row">
           <div class="col-xl-12">
-            <h2 class="display-4 ht-tm-component-title">Top Wor<span class="vim-caret">k</span></h2>
+            <h2 class="display-4 ht-tm-component-title">
+              Top Wor<span class="vim-caret">k</span>
+            </h2>
           </div>
         </div>
         <div class="row">
@@ -13,46 +15,66 @@
               <div class="ht-tm-componentsblock">
                 <div class="ht-tm-cat ht-tm-btn-replaceable">
                   <div class="row">
-                    @if (!show) {
-                      @for (item of skeletons; track $index) {
-                        <div class="col-md-6">
-                          <app-skeleton page="Work" />
-                        </div>
-                      }
-                    } @else {
-                      @for (work of works; track $index) {
-                        <div class="col-lg-4" tabindex="0">
-                          <div class="row">
-                            <div class="ht-tm-codeblock">
-                              <div class="ht-tm-element card card-work bg-dark border">
-                                <div class="card-body p-3">
-                                  <div class="container">
-                                    <div class="row">
-                                      <div class="col-12">
-                                        <div class="row text-white">
-                                          <div class="col-3 align-self-center">
-                                              <img
-                                                [alt]="'logo '+work?.fields?.company"
-                                                class="rounded-circle shadow-4-strong img-fluid d-block"
-                                                [ngSrc]="work?.logoAsset"
-                                                width="100" height="100" priority
-                                              />
-                                          </div>
-                                          <div class="col-9">
-                                              <span class="visually-hidden">Company</span>
-                                              <span class="font-weight-bold">{{work?.fields?.company}}</span>
-                                              <div [innerHTML]="work?.fields?.skills | sanitizedHtml"></div>
-                                              <div class="d-flex justify-content-between mt-2">
-                                                <small class="visually-hidden">Role</small>
-                                                <small class="font-weight-lighter">{{work?.fields?.position}}</small>
-                                                <small class="visually-hidden">Date</small>
-                                                <small class="font-weight-lighter ml-2">{{work?.fields?.startYear}} - @if (work?.fields?.isResigned) {
-                                                  {{work?.fields?.endYear}}
-                                                } @else {
-                                                  Present
-                                                }</small>
-                                              </div>
-                                          </div>
+                    @if (!show) { @for (item of skeletons; track $index) {
+                    <div class="col-md-6">
+                      <app-skeleton page="Work" />
+                    </div>
+                    } } @else { @for (work of works; track $index) {
+                    <div class="col-lg-4" tabindex="0">
+                      <div class="row">
+                        <div class="ht-tm-codeblock">
+                          <div
+                            class="ht-tm-element card card-work bg-dark border"
+                          >
+                            <div class="card-body p-3">
+                              <div class="container">
+                                <div class="row">
+                                  <div class="col-12">
+                                    <div class="row text-white">
+                                      <div class="col-3 align-self-center">
+                                        <img
+                                          [alt]="
+                                            'logo ' + work?.fields?.company
+                                          "
+                                          class="rounded-circle shadow-4-strong img-fluid d-block"
+                                          [ngSrc]="work?.logoAsset"
+                                          width="100"
+                                          height="100"
+                                          priority
+                                          loading="eager"
+                                        />
+                                      </div>
+                                      <div class="col-9">
+                                        <span class="visually-hidden"
+                                          >Company</span
+                                        >
+                                        <span class="font-weight-bold">{{
+                                          work?.fields?.company
+                                        }}</span>
+                                        <div
+                                          [innerHTML]="
+                                            work?.fields?.skills | sanitizedHtml
+                                          "
+                                        ></div>
+                                        <div
+                                          class="d-flex justify-content-between mt-2"
+                                        >
+                                          <small class="visually-hidden"
+                                            >Role</small
+                                          >
+                                          <small class="font-weight-lighter">{{
+                                            work?.fields?.position
+                                          }}</small>
+                                          <small class="visually-hidden"
+                                            >Date</small
+                                          >
+                                          <small
+                                            class="font-weight-lighter ml-2"
+                                            >{{ work?.fields?.startYear }} - @if
+                                            (work?.fields?.isResigned) {
+                                            {{ work?.fields?.endYear }}
+                                            } @else { Present }</small
+                                          >
                                         </div>
                                       </div>
                                     </div>
@@ -62,14 +84,13 @@
                             </div>
                           </div>
                         </div>
-                      } @empty {
-                        @for (item of skeletons; track $index) {
-                          <div class="col-md-6">
-                            <app-skeleton page="Work" />
-                          </div>
-                        }
-                      }
-                    }
+                      </div>
+                    </div>
+                    } @empty { @for (item of skeletons; track $index) {
+                    <div class="col-md-6">
+                      <app-skeleton page="Work" />
+                    </div>
+                    } } }
                   </div>
                 </div>
               </div>
@@ -77,16 +98,39 @@
           </div>
         </div>
         @if (works.length > 0) {
-          <nav class="text-white" aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="{{currentPage === 1 ? 'page-item disabled ' : 'page-item'}}">
-                <button (click)="previousPage()" [disabled]="currentPage === 1" class="page-link" tabindex="-1">Previous</button>
-              </li>
-              <li class="{{currentPage === works.length ? 'page-item disabled' : 'page-item '}}">
-                <button (click)="nextPage()" [disabled]="currentPage === works.length" class="page-link">Next</button>
-              </li>
-            </ul>
-          </nav>
+        <nav class="text-white" aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li
+              class="{{
+                currentPage === 1 ? 'page-item disabled ' : 'page-item'
+              }}"
+            >
+              <button
+                (click)="previousPage()"
+                [disabled]="currentPage === 1"
+                class="page-link"
+                tabindex="-1"
+              >
+                Previous
+              </button>
+            </li>
+            <li
+              class="{{
+                currentPage === works.length
+                  ? 'page-item disabled'
+                  : 'page-item '
+              }}"
+            >
+              <button
+                (click)="nextPage()"
+                [disabled]="currentPage === works.length"
+                class="page-link"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
         }
       </div>
     </div>

@@ -14,46 +14,61 @@ const CONFIG = environment;
   imports: [PipesModule, SkeletonComponent],
   templateUrl: './blog.component.html',
   styles: [
-    `.card-blog:hover {
-      border-color: #252640!important;
-      box-shadow: 0 0 50px 15px #28293e!important;
-    }`
-  ]
+    `
+      .card-blog:hover {
+        border-color: #252640 !important;
+        box-shadow: 0 0 50px 15px #28293e !important;
+      }
+    `,
+  ],
 })
 export class BlogComponent {
-  blogs:any = [];
-  show:boolean = false;
-  skeletons:any = [1,2,3,4];
+  blogs: any = [];
+  show: boolean = false;
+  skeletons: any = [1, 2, 3, 4];
   currentPage = 1;
   itemsPerPage = 4;
   totalItems: number = 0;
 
-  constructor(private httpService: HttpService,
+  constructor(
+    private httpService: HttpService,
     private meta: MetaService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.meta.updateTitle(`Blog - ${import.meta.env['NG_APP_NAME']}`);
     this.fetchBlog();
-
   }
 
   fetchBlog() {
     const startIndex = Math.max(0, (this.currentPage - 1) * this.itemsPerPage);
-    const url = `${service.mediumBlog}&api_key=${import.meta.env['NG_APP_API_KEY']}&count=${this.itemsPerPage}&offset=${startIndex}`;
-    this.httpService.get(url).subscribe(
-      {next: (resp: any) => {
+    const url = `${service.mediumBlog}&api_key=${
+      import.meta.env['NG_APP_API_KEY']
+    }&count=${this.itemsPerPage}&offset=${startIndex}`;
+    this.httpService.get(url).subscribe({
+      next: (resp: any) => {
         this.blogs = resp?.items;
+        this.blogs = resp?.items.map((item: any) => {
+          return {
+            ...item,
+            thumbnailColor: `#${Math.floor(Math.random() * 0xffffff)
+              .toString(16)
+              .padStart(6, '0')}`,
+          };
+        });
+
         this.totalItems = resp.items.length;
 
         setInterval(() => {
           this.show = true;
           this.cdr.detectChanges();
         }, 100);
-    }, error(err) {
-      console.error(err);
-    }});
+      },
+      error(err) {
+        console.error(err);
+      },
+    });
   }
 
   nextPage() {
@@ -65,5 +80,4 @@ export class BlogComponent {
     this.currentPage--;
     this.fetchBlog();
   }
-
 }
