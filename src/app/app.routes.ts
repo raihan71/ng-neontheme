@@ -5,46 +5,49 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-    import('./pages/home/home.component')
-        .then(m => m.HomeComponent)
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'home',
     loadComponent: () =>
-        import('./pages/home/home.component')
-            .then(m => m.HomeComponent)
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'work',
     loadComponent: () =>
-        import('./pages/work/work.component')
-            .then(m => m.WorkComponent)
+      import('./pages/work/work.component').then((m) => m.WorkComponent),
   },
   {
     path: 'blog',
     loadComponent: () =>
-        import('./pages/blog/blog.component')
-            .then(m => m.BlogComponent)
+      import('./pages/blog/blog.component').then((m) => m.BlogComponent),
   },
   {
     path: 'project',
     loadComponent: () =>
-        import('./pages/project/project.component')
-            .then(m => m.ProjectComponent)
+      import('./pages/project/project.component').then(
+        (m) => m.ProjectComponent
+      ),
   },
   {
     path: 'talk',
     loadComponent: () =>
-        import('./pages/talk/talk.component')
-            .then(m => m.TalkComponent)
+      import('./pages/talk/talk.component').then((m) => m.TalkComponent),
   },
   {
     path: 'talk/:id',
     pathMatch: 'full',
     loadComponent: () =>
-        import('./pages/talk/detail/detail.component')
-            .then(m => m.DetailComponent)
+      import('./pages/talk/detail/detail.component').then(
+        (m) => m.DetailComponent
+      ),
   },
-
-  { path: '**', component: NotfoundComponent }
+  {
+    path: 'maudong',
+    loadComponent: () =>
+      import('./pages/affiliate/affiliate.component').then(
+        (m) => m.AffiliateComponent
+      ),
+  },
+  { path: '**', component: NotfoundComponent },
 ];
