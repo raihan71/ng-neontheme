@@ -11,6 +11,8 @@ export class AffiliateComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    window.location.href = 'https://poslte.my.id/fyi';
+    if (typeof window !== 'undefined') {
+      window.location.href = 'https://poslte.my.id/fyi';
+    }
   }
 }
