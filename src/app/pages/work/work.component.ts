@@ -75,9 +75,24 @@ export class WorkComponent {
         // Wait for all promises to resolve
         Promise.all(updatedWorksPromises).then((updatedWorks) => {
           this.works = updatedWorks.sort((a, b) => {
-            const endYearA = a.fields.endYear || 0;
-            const endYearB = b.fields.endYear || 0;
-            return endYearB - endYearA;
+            const isResignedA = !!a?.fields?.isResigned;
+            const isResignedB = !!b?.fields?.isResigned;
+
+            if (isResignedA !== isResignedB) {
+              return isResignedA ? 1 : -1;
+            }
+
+            const endYearA = a?.fields?.endYear ?? 0;
+            const endYearB = b?.fields?.endYear ?? 0;
+
+            if (endYearA !== endYearB) {
+              return endYearB - endYearA;
+            }
+
+            const startYearA = a?.fields?.startYear ?? 0;
+            const startYearB = b?.fields?.startYear ?? 0;
+
+            return startYearB - startYearA;
           });
           setInterval(() => {
             this.show = true;
