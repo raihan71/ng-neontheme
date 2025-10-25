@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
@@ -13,9 +13,10 @@ const CONFIG = environment.contentful_config;
   imports: [SkeletonComponent, PipesModule, NgOptimizedImage, RouterLink],
   templateUrl: './talk.component.html',
 })
-export class TalkComponent {
+export class TalkComponent implements OnDestroy {
   talks:any = [];
   show:boolean = false;
+  private showTimeout?: number;
 
   constructor(private cs: ContentfulService, private meta: MetaService,
     private cdr: ChangeDetectorRef
@@ -28,15 +29,27 @@ export class TalkComponent {
     };
     this.meta.updateTitle(`Talk - ${import.meta.env['NG_APP_NAME']}`);
     this.cs.getEntries(params).subscribe({
-    next: (entries) => {
-      if (entries.length > 0) {
-        this.talks = entries;
+      next: (entries) => {
+        if (entries.length > 0) {
+          this.talks = entries;
+        }
+
+        // ensure we don't create multiple timers
+        if (this.showTimeout) {
+          clearTimeout(this.showTimeout);
+        }
+        this.showTimeout = window.setTimeout(() => {
+          this.show = true;
+          this.cdr.detectChanges();
+        }, 100);
       }
-      setInterval(() => {
-        this.show = true;
-        this.cdr.detectChanges();
-      }, 100);
-    }});
+    });
 
   }
-}
+
+  ngOnDestroy(): void {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = undefined;
+    }
+  }

@@ -1,8 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
-import { ContentfulService } from '../../services/contentful.service';
-import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
-import { PipesModule } from '../../pipes/pipes.module';
+import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MetaService } from '../../services/metaseo.service';
 const CONFIG = environment.contentful_config;
@@ -20,19 +16,16 @@ const CONFIG = environment.contentful_config;
     `,
   ],
 })
-export class WorkComponent {
+export class WorkComponent implements OnDestroy {
   works: any = [];
   show: boolean = false;
   skeletons: any = [1, 2, 3, 4];
   limit: number = 6;
   skip: number = 0;
   currentPage: number = 1;
+  private showTimeout?: number;
 
-  constructor(
-    private cs: ContentfulService,
-    private meta: MetaService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private cs: ContentfulService, private meta: MetaService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.meta.updateTitle(`Work - ${import.meta.env['NG_APP_NAME']}`);
@@ -50,22 +43,15 @@ export class WorkComponent {
     this.cs.getEntries(params).subscribe((works: any[]) => {
       if (works && works.length > 0) {
         const updatedWorksPromises = works.map((work: any) => {
-          if (
-            work.fields &&
-            work.fields.logo &&
-            work.fields.logo.sys &&
-            work.fields.logo.sys.id
-          ) {
+          if (work.fields && work.fields.logo && work.fields.logo.sys && work.fields.logo.sys.id) {
             const logoSysId = work.fields.logo.sys.id;
-            return this.cs
-              .getSingleImg(logoSysId)
-              .then((logoAsset: string | undefined) => {
-                // Update the current work entry with the logoAsset
-                return {
-                  ...work,
-                  logoAsset: logoAsset,
-                };
-              });
+            return this.cs.getSingleImg(logoSysId).then((logoAsset: string | undefined) => {
+              // Update the current work entry with the logoAsset
+              return {
+                ...work,
+                logoAsset: logoAsset,
+              };
+            });
           }
 
           // If the entry doesn't have the necessary fields, return the original entry
@@ -94,7 +80,12 @@ export class WorkComponent {
 
             return startYearB - startYearA;
           });
-          setInterval(() => {
+
+          // clear any previous timer and set a one-shot timer
+          if (this.showTimeout) {
+            clearTimeout(this.showTimeout);
+          }
+          this.showTimeout = window.setTimeout(() => {
             this.show = true;
             this.cdr.detectChanges();
           }, 100);
@@ -119,5 +110,12 @@ export class WorkComponent {
       this.currentPage = 1;
     }
     this.fetchWork();
+  }
+
+  ngOnDestroy(): void {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = undefined;
+    }
   }
 }

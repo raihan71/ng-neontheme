@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { SkeletonComponent } from '../../shared/skeleton/skeleton.component';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -11,12 +11,7 @@ const CONFIG = environment.contentful_config;
 @Component({
   selector: 'app-project',
   standalone: true,
-  imports: [
-    SkeletonComponent,
-    PipesModule,
-    NgOptimizedImage,
-    ListCategoryComponent,
-  ],
+  imports: [SkeletonComponent, PipesModule, NgOptimizedImage, ListCategoryComponent],
   templateUrl: './project.component.html',
   styles: [
     `
@@ -27,7 +22,7 @@ const CONFIG = environment.contentful_config;
     `,
   ],
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnDestroy {
   projects: any = [];
   show: boolean = false;
   skeletons: any = [1, 2, 3, 4];
@@ -35,12 +30,9 @@ export class ProjectComponent {
   skip: number = 0;
   currentPage: number = 1;
   category: any;
+  private showTimeout?: number;
 
-  constructor(
-    private cs: ContentfulService,
-    private meta: MetaService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private cs: ContentfulService, private meta: MetaService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.meta.updateTitle(`Project - ${import.meta.env['NG_APP_NAME']}`);
@@ -74,23 +66,16 @@ export class ProjectComponent {
     this.cs.getEntries(params).subscribe((projects: any[]) => {
       if (projects && projects.length > 0) {
         const updatedProjectsPromises = projects.map((project: any) => {
-          if (
-            project.fields &&
-            project.fields.logo &&
-            project.fields.logo.sys &&
-            project.fields.logo.sys.id
-          ) {
+          if (project.fields && project.fields.logo && project.fields.logo.sys && project.fields.logo.sys.id) {
             const logoSysId = project.fields.logo.sys.id;
 
-            return this.cs
-              .getSingleImg(logoSysId)
-              .then((logoAsset: string | undefined) => {
-                // Update the current project entry with the logoAsset
-                return {
-                  ...project,
-                  logoAsset: logoAsset,
-                };
-              });
+            return this.cs.getSingleImg(logoSysId).then((logoAsset: string | undefined) => {
+              // Update the current project entry with the logoAsset
+              return {
+                ...project,
+                logoAsset: logoAsset,
+              };
+            });
           }
 
           return project;
@@ -99,7 +84,12 @@ export class ProjectComponent {
         // Wait for all promises to resolve
         Promise.all(updatedProjectsPromises).then((updatedProjects) => {
           this.projects = updatedProjects;
-          setInterval(() => {
+
+          // clear any previous timer and set a one-shot timer
+          if (this.showTimeout) {
+            clearTimeout(this.showTimeout);
+          }
+          this.showTimeout = window.setTimeout(() => {
             this.show = true;
             this.cdr.detectChanges();
           }, 100);
@@ -116,13 +106,20 @@ export class ProjectComponent {
 
   previousPage() {
     this.skip -= this.limit;
+    this.currentPage--;
     if (this.skip < 0) {
       this.skip = 0;
     }
-    this.currentPage--;
     if (this.currentPage < 1) {
       this.currentPage = 1;
     }
     this.fetchProject();
+  }
+
+  ngOnDestroy(): void {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = undefined;
+    }
   }
 }
