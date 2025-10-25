@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { environment } from '../../../environments/environment';
 import { PipesModule } from '../../pipes/pipes.module';
@@ -22,19 +22,16 @@ const CONFIG = environment;
     `,
   ],
 })
-export class BlogComponent {
+export class BlogComponent implements OnDestroy {
   blogs: any = [];
   show: boolean = false;
   skeletons: any = [1, 2, 3, 4];
   currentPage = 1;
   itemsPerPage = 4;
   totalItems: number = 0;
+  private showTimeout?: number;
 
-  constructor(
-    private httpService: HttpService,
-    private meta: MetaService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private httpService: HttpService, private meta: MetaService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.meta.updateTitle(`Blog - ${import.meta.env['NG_APP_NAME']}`);
@@ -43,9 +40,7 @@ export class BlogComponent {
 
   fetchBlog() {
     const startIndex = Math.max(0, (this.currentPage - 1) * this.itemsPerPage);
-    const url = `${service.mediumBlog}&api_key=${
-      import.meta.env['NG_APP_API_KEY']
-    }&count=${this.itemsPerPage}&offset=${startIndex}`;
+    const url = `${service.mediumBlog}&api_key=${import.meta.env['NG_APP_API_KEY']}&count=${this.itemsPerPage}&offset=${startIndex}`;
     this.httpService.get(url).subscribe({
       next: (resp: any) => {
         this.blogs = resp?.items;
@@ -60,7 +55,11 @@ export class BlogComponent {
 
         this.totalItems = resp.items.length;
 
-        setInterval(() => {
+        // clear any previous timer and set a one-shot timer
+        if (this.showTimeout) {
+          clearTimeout(this.showTimeout);
+        }
+        this.showTimeout = window.setTimeout(() => {
           this.show = true;
           this.cdr.detectChanges();
         }, 100);
@@ -79,5 +78,12 @@ export class BlogComponent {
   previousPage() {
     this.currentPage--;
     this.fetchBlog();
+  }
+
+  ngOnDestroy(): void {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = undefined;
+    }
   }
 }

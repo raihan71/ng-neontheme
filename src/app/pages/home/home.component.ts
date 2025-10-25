@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, inject, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NgOptimizedImage } from '@angular/common';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,27 +17,27 @@ const CONFIG = environment.contentful_config;
   templateUrl: './home.component.html',
   styles: [],
 })
-export class HomeComponent {
-  show:boolean = false;
-  about:any = {};
-  image:any = '';
-  socials:any = [];
+export class HomeComponent implements OnDestroy {
+  show: boolean = false;
+  about: any = {};
+  image: any = '';
+  socials: any = [];
   currentWork: any = {};
   private readonly title = inject(Title);
+  private showTimeout?: number;
 
-  constructor(
-    private cs: ContentfulService,
-    private cdr: ChangeDetectorRef
-    ) {}
+  constructor(private cs: ContentfulService, private cdr: ChangeDetectorRef) {}
   ngOnInit() {
     this.title.setTitle(`Home - ${import.meta.env['NG_APP_NAME']}`);
     forkJoin({
       aboutMe: this.cs.getEntry(import.meta.env['NG_APP_ABOUTME']),
-      socials: from(this.cs.getEntries({content_type: CONFIG.contentTypeIds.socials})),
-      works: from(this.cs.getEntries({
-        content_type: CONFIG.contentTypeIds.works,
-        'fields.isResigned': false
-      }))
+      socials: from(this.cs.getEntries({ content_type: CONFIG.contentTypeIds.socials })),
+      works: from(
+        this.cs.getEntries({
+          content_type: CONFIG.contentTypeIds.works,
+          'fields.isResigned': false,
+        })
+      ),
     })
       .pipe(
         mergeMap(({ aboutMe, socials, works }) => {
@@ -50,12 +50,24 @@ export class HomeComponent {
           return from(this.cs.getSingleImg(avatar?.sys?.id)); // Convert Promise to Observable
         })
       )
-      .subscribe(asset => {
+      .subscribe((asset) => {
         this.image = asset;
-        setInterval(() => {
+
+        // clear any previous timer and set a one-shot timer
+        if (this.showTimeout) {
+          clearTimeout(this.showTimeout);
+        }
+        this.showTimeout = window.setTimeout(() => {
           this.show = true;
           this.cdr.detectChanges();
         }, 100);
       });
+  }
+
+  ngOnDestroy(): void {
+    if (this.showTimeout) {
+      clearTimeout(this.showTimeout);
+      this.showTimeout = undefined;
+    }
   }
 }
